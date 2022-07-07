@@ -43,6 +43,9 @@ class MNIST_Data(Dataset):
 
     def get_test(self):
         return torch.from_numpy(self.X_test), torch.from_numpy(self.y_test).type(torch.LongTensor)
+    
+    def get_training(self):
+        return self.X_train, self.y_train
 
 
 class NN(nn.Module):
@@ -74,7 +77,6 @@ def check_accuracy(model,loader):
 
 
 def main():
-
     #input parameters
     input_size    = 784
     num_classes   = 10
@@ -110,12 +112,17 @@ def main():
             optimizer.step()
 
     print('Done with training...')
+
     #testing data
     X_test, y_test = dataset.get_test()
     test_dataset = MNIST_Test(X_test, y_test)
     test_loader = DataLoader(dataset=test_dataset ,batch_size = batch_size,shuffle=True)
-    check_accuracy(model, test_loader)
+
+    #Accuracy of the model
+    print(f'Accuracy Training Data:')
     check_accuracy(model, dataloader)
+    print(f'Accuracy Testing Data:')
+    check_accuracy(model, test_loader)
 
     #accuracy checking
 if __name__ == "__main__":
