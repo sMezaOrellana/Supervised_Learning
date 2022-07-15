@@ -42,8 +42,8 @@ class CNN(nn.Module):
             super(CNN, self).__init__()
             self.conv1 = nn.Conv2d(in_channels=1, out_channels=8, kernel_size=(3,3), stride=(1,1), padding=(1,1))
             self.pool = nn.MaxPool2d(kernel_size=(2,2), stride=(2,2))
-            self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=(3,3), stride=(1,1), padding=(1,1))
-            self.fc1 = nn.Linear(16*7*7, num_classes)
+            self.conv2 = nn.Conv2d(in_channels=8, out_channels=32, kernel_size=(3,3), stride=(1,1), padding=(1,1))
+            self.fc1 = nn.Linear(32*7*7, num_classes)
 
     def forward(self,x):
         x = F.relu(self.conv1(x))
