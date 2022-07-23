@@ -30,8 +30,8 @@ class Dataset_M(Dataset):
 
 class Dataset_Load:
     def __init__(self):
-        self.maj_files = os.path.join(os.getcwd(),'Data', 'major')
-        self.min_files = os.path.join(os.getcwd(),'Data', 'minor')
+        self.maj_files = os.path.join(os.getcwd(),'Data', 'allmaj')
+        self.min_files = os.path.join(os.getcwd(),'Data', 'allmin')
         self.maj_files_paths = load_files(self.maj_files)
         self.min_files_paths = load_files(self.min_files)
         self.sr_n = 2000
@@ -47,9 +47,9 @@ class Dataset_Load:
         return B    
     
     def train_test_split(self,X, Y, test_size=0.33):
-        num_test_set = int( 502 * test_size) #165
-        random_test_indices = torch.tensor(random.sample(range(0, 502), num_test_set))
-        random_train_indices = torch.tensor(self.complement_indices(random_test_indices, 502))
+        num_test_set = int( 3012 * test_size) #165
+        random_test_indices = torch.tensor(random.sample(range(0, 3012), num_test_set))
+        random_train_indices = torch.tensor(self.complement_indices(random_test_indices, 3012))
         
         X_train = X[random_train_indices]
         X_test = X[random_test_indices]
@@ -76,8 +76,8 @@ class Dataset_Load:
         return torch.stft(signal, n_fft=2048, hop_length = 120,return_complex=True)
     
     def load_files_to_tensor(self):
-        X = torch.zeros([502, 1 , 1025 , 34], dtype=torch.float32)
-        Y = torch.cat([torch.zeros(250), torch.ones(252)]).type(torch.LongTensor)
+        X = torch.zeros([3012, 1 , 1025 , 34], dtype=torch.float32)
+        Y = torch.cat([torch.zeros(1500), torch.ones(1512)]).type(torch.LongTensor)
         
         i = 0
         for file in self.maj_files_paths:
